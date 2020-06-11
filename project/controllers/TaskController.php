@@ -20,6 +20,11 @@
 
                         if (isset($_POST['is_task']))  $completed = $_POST['is_task'];
 
+                      if (!isset($_SESSION)) { session_start(); }
+
+
+                    if (!empty($_SESSION['login']) or !empty($_SESSION['id'])) {
+
                         if (isset($name) && isset($email) && isset($description)) {
 
                             if ($_GET['success_id'] != null) {
@@ -38,5 +43,9 @@
                             $data["text_info"] = "Одно или несколько полей формы не были заполнены, данные не были добавлены.";
                		    return $this->render('info/index', $data);
                        }
+                  } else {
+                        $data["text_info"] = "Вы не можете Добавить задачу. Текущая сессия уже завершена! Вы можете: <br/><a style='color:white' href='http://idealist.kl.com.ua/login'>Войти заново</a> <br/><br/>или";
+                        return $this->render('info/index', $data);
+                    }
 		}
 	}
